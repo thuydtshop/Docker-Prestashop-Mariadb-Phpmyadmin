@@ -1,0 +1,47 @@
+version: '3.9'
+
+services:
+
+  ## For Mariadb
+  mariadb:
+    image: mariadb
+    restart: always
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: prestashop
+      MYSQL_USER: prestashop
+      MYSQL_PASSWORD: prestashop
+      MYSQL_ROOT_PASSWORD: prestashop
+    volumes:
+      - './dbdata:/var/lib/mysql:rw'
+
+  ## Prestashop source folder
+  prestashop:
+    build:
+      context: .
+      dockerfile: .docker/Dockerfile
+    restart: always
+    ports:
+      - '8080:80'
+    volumes:
+      - './src:/var/www/html'
+    depends_on:
+      - mariadb
+
+  ## Phpmyadmin or adminer
+  phpmyadmin:
+    image: phpmyadmin
+    restart: always
+    depends_on:
+      - mariadb
+    ports:
+      - '9001:80'
+    environment:
+      PMA_HOST: mariadb
+
+volumes:
+  dbdata:
+    driver: local
+  src:
+    driver: local

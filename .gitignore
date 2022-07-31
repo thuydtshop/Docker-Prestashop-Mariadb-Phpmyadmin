@@ -32,3 +32,5 @@ admin-dev/import/
 download/
 /img/*
 upload/
+.docker/.DS_Store
+.DS_Store

@@ -1,5 +1,5 @@
-# Try to change the php version for compatibility with your Opencart version
-FROM php:7.4.14-apache
+# Try to change the php version for compatibility with your Prestashop version
+FROM php:8.2-apache
 
 RUN a2enmod rewrite headers
 
